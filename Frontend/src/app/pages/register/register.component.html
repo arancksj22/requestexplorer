@@ -1,0 +1,104 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+	<div class="w-full max-w-md space-y-8">
+		<div class="text-center">
+			<h1 class="title">Create your account</h1>
+			<p class="subtitle">Join APITester and start testing your APIs</p>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">Sign Up</h2>
+				<p class="card-desc">Create your account to get started</p>
+			</div>
+			<div class="card-content">
+								<!-- Error/Success message display -->
+								@if (errorMessage) {
+									<div class="alert alert-error" style="background: #fee; border: 1px solid #fcc; padding: 12px; border-radius: 6px; margin-bottom: 16px; color: #c33;">
+										{{ errorMessage }}
+									</div>
+								}
+								@if (successMessage) {
+									<div class="alert alert-success" style="background: #efe; border: 1px solid #cfc; padding: 12px; border-radius: 6px; margin-bottom: 16px; color: #3c3;">
+										{{ successMessage }}
+									</div>
+								}
+
+								<form #registerForm="ngForm" (ngSubmit)="handleRegister(registerForm)" class="form" novalidate>
+					<div class="field">
+						<label for="name">Full Name</label>
+						<div class="relative">
+							<span class="icon left"></span>
+											<input id="name" name="name" type="text" placeholder="Enter your full name" [(ngModel)]="formData.name" class="input pl10" required minlength="2" />
+						</div>
+										@if (registerForm.submitted && registerForm.controls['name']?.errors?.['required']) {
+											<p class="error">Name is required.</p>
+										}
+										@if (registerForm.submitted && registerForm.controls['name']?.errors?.['minlength']) {
+											<p class="error">Name must be at least 2 characters.</p>
+										}
+					</div>
+
+						<div class="field">
+							<label for="email">Email</label>
+							<div class="relative">
+								<span class="icon left"></span>
+															<input id="email" name="email" type="email" placeholder="Enter your email" [(ngModel)]="formData.email" class="input pl10" required email />
+							</div>
+														@if (registerForm.submitted && registerForm.controls['email']?.errors?.['required']) {
+															<p class="error">Email is required.</p>
+														}
+														@if (registerForm.submitted && registerForm.controls['email']?.errors?.['email']) {
+															<p class="error">Enter a valid email.</p>
+														}
+						</div>
+
+						<div class="field">
+							<label for="password">Password</label>
+							<div class="relative">
+								<span class="icon left"></span>
+																<input id="password" name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Create a password" [(ngModel)]="formData.password" class="input pl10 pr10" required minlength="6" />
+								<button type="button" class="btn ghost icon-btn right" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+									<img [src]="showPassword ? '/eye-password-see-view-svgrepo-com.svg' : '/eye-key-look-password-security-see-svgrepo-com.svg'" alt="" width="18" height="18" />
+								</button>
+							</div>
+													@if (registerForm.submitted && registerForm.controls['password']?.errors?.['required']) {
+														<p class="error">Password is required.</p>
+													}
+													@if (registerForm.submitted && registerForm.controls['password']?.errors?.['minlength']) {
+														<p class="error">Password must be at least 6 characters.</p>
+													}
+						</div>
+
+						<div class="field">
+							<label for="confirmPassword">Confirm Password</label>
+							<div class="relative">
+								<span class="icon left"></span>
+																<input id="confirmPassword" name="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm your password" [(ngModel)]="formData.confirmPassword" class="input pl10 pr10" required />
+								<button type="button" class="btn ghost icon-btn right" (click)="showConfirmPassword = !showConfirmPassword" [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'">
+									<img [src]="showConfirmPassword ? '/eye-password-see-view-svgrepo-com.svg' : '/eye-key-look-password-security-see-svgrepo-com.svg'" alt="" width="18" height="18" />
+								</button>
+							</div>
+													@if (registerForm.submitted && registerForm.controls['confirmPassword']?.errors?.['required']) {
+														<p class="error">Please confirm your password.</p>
+													}
+													@if (registerForm.submitted && !registerForm.controls['confirmPassword']?.errors && passwordMismatch) {
+														<p class="error">Passwords do not match.</p>
+													}
+						</div>
+
+												<button type="submit" class="btn grad w-full" [disabled]="isLoading || registerForm.invalid || passwordMismatch">
+							@if (isLoading) { <span class="spinner"></span> }
+							{{ isLoading ? 'Creating account...' : 'Create Account' }}
+						</button>
+				</form>
+
+				<div class="text-center" style="margin-top: 1.5rem;">
+					<p class="muted small">
+						Already have an account?
+						<a routerLink="/login" class="link strong">Sign in</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

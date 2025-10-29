@@ -1,0 +1,24 @@
+<section class="response">
+	<div class="summary">
+		<span class="badge" [class.bad]="!response.ok">{{ response.status }} {{ response.statusText }}</span>
+		<span class="muted">{{ response.durationMs }} ms</span>
+	</div>
+
+	<details>
+		<summary>Headers</summary>
+		<table>
+			<tbody>
+				@for (kv of (response.headers | keyvalue); track kv) {
+				<tr>
+					<th>{{ kv.key }}</th>
+					<td>{{ kv.value }}</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</details>
+
+	<div class="body">
+		<pre>{{ response.body | json }}</pre>
+	</div>
+</section>

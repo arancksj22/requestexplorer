@@ -1,0 +1,75 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+	<div class="w-full max-w-md space-y-8">
+		<div class="text-center">
+			<h1 class="title">Welcome back</h1>
+			<p class="subtitle">Sign in to your APITester account</p>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">Sign In</h2>
+				<p class="card-desc">Enter your credentials to access your account</p>
+			</div>
+			<div class="card-content">
+								<!-- Error message display -->
+								@if (errorMessage) {
+									<div class="alert alert-error" style="background: #fee; border: 1px solid #fcc; padding: 12px; border-radius: 6px; margin-bottom: 16px; color: #c33;">
+										{{ errorMessage }}
+									</div>
+								}
+
+								<form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)" class="form" novalidate>
+					<div class="field">
+						<label for="email">Email</label>
+						<div class="relative">
+											<input id="email" name="email" type="email" placeholder="Enter your email" [(ngModel)]="email" class="input pl10" required email />
+						</div>
+										@if (loginForm.submitted && loginForm.controls['email']?.errors?.['required']) {
+											<p class="error">Email is required.</p>
+										}
+										@if (loginForm.submitted && loginForm.controls['email']?.errors?.['email']) {
+											<p class="error">Enter a valid email.</p>
+										}
+					</div>
+
+					<div class="field">
+						<label for="password">Password</label>
+						<div class="relative">
+							<span class="icon left"></span>
+											<input id="password" name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" [(ngModel)]="password" class="input pl10 pr10" required minlength="6" />
+							<button type="button" class="btn ghost icon-btn right" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+								<img [src]="showPassword ? '/eye-password-see-view-svgrepo-com.svg' : '/eye-key-look-password-security-see-svgrepo-com.svg'" alt="" width="18" height="18" />
+							</button>
+						</div>
+										@if (loginForm.submitted && loginForm.controls['password']?.errors?.['required']) {
+											<p class="error">Password is required.</p>
+										}
+										@if (loginForm.submitted && loginForm.controls['password']?.errors?.['minlength']) {
+											<p class="error">Password must be at least 6 characters.</p>
+										}
+					</div>
+
+					<div class="row between">
+						<label class="check">
+							<input id="remember" type="checkbox" />
+							<span>Remember me</span>
+						</label>
+						<a routerLink="/forgot-password" class="link">Forgot password?</a>
+					</div>
+
+										<button type="submit" class="btn grad w-full" [disabled]="isLoading || loginForm.invalid">
+						@if (isLoading) { <span class="spinner"></span> }
+						{{ isLoading ? 'Signing in...' : 'Sign In' }}
+					</button>
+				</form>
+
+				<div class="text-center" style="margin-top: 1.5rem;">
+					<p class="muted small">
+						Don't have an account?
+						<a routerLink="/register" class="link strong">Sign up</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

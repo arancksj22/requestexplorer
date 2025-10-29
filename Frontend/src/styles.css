@@ -1,0 +1,202 @@
+/* Global base styles (no Tailwind) */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body,
+app-root {
+	height: 100%;
+}
+
+:root {
+	--bg: #ffffff;
+	--card: #ffffff;
+	--border: #e5e7eb;
+	--muted: #6b7280;
+	--text: #111827;
+	--primary: #6b27d9; /* solid violet per request */
+	--primary-foreground: #ffffff;
+	--gradient-start: #6b27d9;
+	--gradient-end: #6b27d9;
+	--method-get: #059669; /* emerald-600 */
+	--method-post: #2563eb; /* blue-600 */
+	--method-put: #d97706; /* amber-600 */
+	--method-patch: #7c3aed; /* violet-600 */
+	--method-delete: #dc2626; /* red-600 */
+	--status-success: #059669;
+	--status-redirect: #2563eb;
+	--status-client-error: #d97706;
+	--status-server-error: #dc2626;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+	color: var(--text);
+	background: var(--bg);
+}
+
+a {
+	color: var(--text);
+	text-decoration: none;
+}
+
+code,
+pre {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Utilities / small design system */
+.container {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.muted {
+	color: var(--muted);
+}
+
+.card {
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+}
+
+.card-padding {
+	padding: 1rem;
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	border: 1px solid var(--primary);
+	color: var(--primary-foreground);
+	background: var(--primary);
+	padding: 0.5rem 0.9rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+.btn:hover {
+	filter: brightness(0.95);
+}
+
+.btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.btn.outline {
+	background: transparent;
+	color: var(--primary);
+	border-color: var(--primary);
+}
+
+.btn.primary {
+	background: var(--primary);
+	border-color: var(--primary);
+	color: var(--primary-foreground);
+}
+
+.btn.grad {
+	background: var(--primary);
+	color: var(--primary-foreground);
+	border-color: var(--primary);
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	border: 1px solid var(--border);
+	background: #f9fafb;
+	color: var(--text);
+	border-radius: 999px;
+	padding: 0.2rem 0.55rem;
+	font-size: 0.8rem;
+}
+
+.badge.primary {
+	background: color-mix(in oklab, var(--primary) 12%, white);
+	color: var(--primary);
+	border-color: color-mix(in oklab, var(--primary) 30%, white);
+}
+
+.shadow-glow {
+	box-shadow: 0 10px 30px -12px rgba(109, 40, 217, 0.25);
+}
+
+.grad-text {
+	color: var(--primary);
+}
+
+.grid {
+	display: grid;
+	gap: 1rem;
+}
+
+.grid-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1024px) {
+	.grid-4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.grid-2,
+	.grid-3,
+	.grid-4 {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Method/status badge helpers */
+.text-method-get {
+	color: var(--method-get);
+}
+
+.text-method-post {
+	color: var(--method-post);
+}
+
+.text-method-put {
+	color: var(--method-put);
+}
+
+.text-method-patch {
+	color: var(--method-patch);
+}
+
+.text-method-delete {
+	color: var(--method-delete);
+}
+
+.text-status-success {
+	color: var(--status-success);
+}
+
+.text-status-redirect {
+	color: var(--status-redirect);
+}
+
+.text-status-client-error {
+	color: var(--status-client-error);
+}
+
+.text-status-server-error {
+	color: var(--status-server-error);
+}

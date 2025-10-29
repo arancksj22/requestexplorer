@@ -1,0 +1,86 @@
+
+<div class="container">
+	<div class="header">
+		<div>
+			<h1 class="title">General Analytics</h1>
+			<p class="muted subtitle">Overview of your API testing activity and performance metrics</p>
+		</div>
+			<div>
+				<select class="input minw-10rem" [(ngModel)]="timeRange" (change)="recompute()">
+					<option value="7d">Last 7 days</option>
+					<option value="30d">Last 30 days</option>
+					<option value="90d">Last 90 days</option>
+					<option value="1y">Last year</option>
+					<option value="all">All time</option>
+				</select>
+			</div>
+	</div>
+
+	<!-- Stats grid -->
+		<div class="grid grid-4 stats">
+			@for (s of stats; track s) {
+			<div class="card card-padding">
+			<div class="row">
+				<div class="muted label">{{ s.title }}</div>
+			</div>
+			<div class="row">
+				<div class="value">{{ s.value }}</div>
+				<span class="badge" [class.text-method-get]="s.trend==='up'" [class.text-method-delete]="s.trend==='down'">{{ s.change }}</span>
+			</div>
+				<p class="muted small mt-025">{{ s.description }}</p>
+		</div>
+			}
+	</div>
+
+	<div class="grid grid-2 grid-gap">
+		<!-- Status Distribution -->
+			<div class="card">
+			<div class="card-padding">
+				<h3 class="small-strong h3-compact">Status Code Distribution</h3>
+				<p class="muted mb-075">Breakdown of response status codes</p>
+
+					@if (statusDistribution?.length) {
+						@for (item of statusDistribution; track item) {
+						<div class="space-y mb-075">
+						<div class="row fs-095">
+							<span>{{ item.status }}</span>
+							<span class="mono-count">{{ item.count | number }}</span>
+						</div>
+						<div class="bar">
+							<div class="h-100 bar-fill" [ngClass]="item.color" [style.width.%]="item.percentage"></div>
+						</div>
+						<div class="muted muted-row">
+							<span>{{ item.percentage }}%</span>
+						</div>
+						</div>
+						}
+					} @else {
+						<p class="muted small">No requests in this range.</p>
+					}
+			</div>
+		</div>
+
+		<!-- Top Endpoints -->
+			<div class="card">
+			<div class="card-padding">
+				<h3 class="small-strong h3-compact">Top Endpoints</h3>
+				<p class="muted mb-075">Most frequently tested API endpoints</p>
+
+					@if (topEndpoints?.length) {
+						@for (ep of topEndpoints; let i = $index; track ep) {
+						<div class="row-item">
+						<div class="flex-1">
+							<div class="mono small-strong">{{ ep.endpoint }}</div>
+							<div class="muted small">{{ ep.requests | number }} requests • {{ ep.avgTime }} avg • {{ ep.errorRate }} errors</div>
+						</div>
+						<span class="badge">#{{ i + 1 }}</span>
+						</div>
+						}
+					} @else {
+						<p class="muted small">No endpoints yet.</p>
+					}
+			</div>
+		</div>
+	</div>
+
+</div>

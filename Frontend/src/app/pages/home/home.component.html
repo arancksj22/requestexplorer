@@ -1,0 +1,68 @@
+<div class="min-screen">
+	<!-- Hero -->
+	<section class="container hero">
+		@if (authService.isAuthenticated()) {
+			<div class="welcome-message">
+				<h2 class="welcome-text">Welcome, <span class="grad-text">{{ getFirstName() }}</span>!</h2>
+			</div>
+		}
+		<span class="badge">
+			Professional API Testing Tool
+		</span>
+		<h1 class="hero-title">
+			Test Your APIs Like a <span class="grad-text">Pro</span>
+		</h1>
+		<p class="muted hero-lead">
+			A comprehensive API testing platform inspired by Postman, built for powerful testing, debugging, and analytics.
+		</p>
+		<div class="hero-actions">
+			<a routerLink="/tester" class="btn grad pad">Start Testing Now</a>
+			<a routerLink="/about" class="btn outline pad">Learn More</a>
+		</div>
+
+		<div class="grid grid-3 container stats">
+			<div class="stat">
+				<div class="value">10k+</div>
+				<div class="muted">API Requests Tested</div>
+			</div>
+			<div class="stat">
+				<div class="value">500+</div>
+				<div class="muted">Active Developers</div>
+			</div>
+			<div class="stat">
+				<div class="value">99.9%</div>
+				<div class="muted">Uptime</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features (simplified cards) -->
+	<section class="container features">
+		<div class="features-header">
+			<h2 class="features-title">Powerful Features</h2>
+			<p class="muted features-sub">Everything you need to test, debug, and monitor your APIs effectively</p>
+		</div>
+		<div class="grid grid-4">
+			<div class="card card-padding shadow-glow">
+				<div class="badge primary mb-075">API Testing</div>
+				<div class="feature-strong">Send HTTP requests</div>
+				<div class="muted">View responses in real-time with an intuitive interface.</div>
+			</div>
+			<div class="card card-padding shadow-glow">
+				<div class="badge primary mb-075">Request History</div>
+				<div class="feature-strong">Track and manage</div>
+				<div class="muted">Comprehensive history logging for your API calls.</div>
+			</div>
+			<div class="card card-padding shadow-glow">
+				<div class="badge primary mb-075">Analytics</div>
+				<div class="feature-strong">Usage insights</div>
+				<div class="muted">Detailed analytics and performance metrics.</div>
+			</div>
+			<div class="card card-padding shadow-glow">
+				<div class="badge primary mb-075">Secure</div>
+				<div class="feature-strong">Reliable platform</div>
+				<div class="muted">Security-minded with data protection.</div>
+			</div>
+		</div>
+	</section>
+</div>

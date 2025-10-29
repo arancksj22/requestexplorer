@@ -1,0 +1,44 @@
+.min-h-screen {
+	min-height: 100vh;
+}
+
+.flex {
+	display: flex;
+}
+
+.items-center {
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.bg-light {
+	background: #f3f4f6;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.code {
+	margin: 0 0 1rem;
+	font-size: 2.25rem;
+	font-weight: 700;
+}
+
+.msg {
+	margin: 0 0 1rem;
+	font-size: 1.125rem;
+	color: #4b5563;
+}
+
+.home-link {
+	color: #2563eb;
+	text-decoration: underline;
+}
+
+.home-link:hover {
+	color: #1d4ed8;
+}

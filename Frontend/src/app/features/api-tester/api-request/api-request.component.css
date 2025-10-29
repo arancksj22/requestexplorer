@@ -1,0 +1,74 @@
+.api-tester {
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	padding: 1rem;
+}
+
+.api-tester h2 {
+	margin: 0 0 1rem;
+}
+
+.request-form .row {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.request-form label {
+	width: 70px;
+	color: #6b7280;
+}
+
+.request-form input,
+.request-form select,
+.request-form textarea {
+	flex: 1;
+	padding: 0.5rem;
+	border: 1px solid #d1d5db;
+	border-radius: 4px;
+	font-family: inherit;
+}
+
+.headers {
+	margin: 0.5rem 0;
+}
+
+.header-row {
+	align-items: stretch !important;
+}
+
+.header-row input {
+	flex: 1;
+}
+
+.link {
+	background: none;
+	border: none;
+	color: #2563eb;
+	cursor: pointer;
+	padding: 0 0.25rem;
+}
+
+.actions {
+	text-align: right;
+}
+
+.actions button {
+	background: #111827;
+	color: #fff;
+	border: 1px solid #111827;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.actions button[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.error {
+	color: #b91c1c;
+	margin-top: 0.5rem;
+}

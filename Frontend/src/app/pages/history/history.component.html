@@ -1,0 +1,67 @@
+
+<div class="container">
+	<div class="header">
+		<h1 class="title">Request History</h1>
+		<p class="muted subtitle">View and manage all your API request history</p>
+	</div>
+
+	<div class="card mb-1">
+		<div class="card-padding toolbar">
+			<div class="controls">
+				<div class="relative">
+					<input placeholder="Search requests..." class="input pl10" [(ngModel)]="searchQuery" (input)="applyFilters()" />
+					<span class="icon left">
+						<img src="/search.svg" alt="" width="16" height="16" />
+					</span>
+				</div>
+				<select class="select" [(ngModel)]="selectedMethod" (change)="applyFilters()">
+					<option>All Methods</option>
+					<option>GET</option>
+					<option>POST</option>
+					<option>PUT</option>
+					<option>PATCH</option>
+					<option>DELETE</option>
+				</select>
+				<select class="select" [(ngModel)]="selectedStatus" (change)="applyFilters()">
+					<option>All Status</option>
+					<option>2xx Success</option>
+					<option>3xx Redirect</option>
+					<option>4xx Client Error</option>
+					<option>5xx Server Error</option>
+				</select>
+			</div>
+			<button class="btn outline" (click)="clear()">Clear All</button>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-padding scroll">
+			@if (entries.length) {
+			<table class="hist-table">
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>URL</th>
+						<th>Status</th>
+						<th>Time</th>
+						<th>Timestamp</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (e of entries; track e) {
+						<tr>
+							<td><span class="badge" [ngClass]="'text-method-' + e.method.toLowerCase()">{{ e.method }}</span></td>
+							<td class="url">{{ e.url }}</td>
+							<td>{{ e.status }}</td>
+							<td>{{ e.durationMs }} ms</td>
+							<td>{{ e.ts | date:'short' }}</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			} @else {
+				<p class="muted centered">No requests yet.</p>
+			}
+		</div>
+	</div>
+</div>

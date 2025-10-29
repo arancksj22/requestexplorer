@@ -1,0 +1,38 @@
+<section class="api-tester">
+	<h2>API Tester</h2>
+	<form (ngSubmit)="send()" #form="ngForm" class="request-form">
+		<div class="row">
+			<label>Method</label>
+			<select [(ngModel)]="request.method" name="method">
+				@for (m of methods; track m) { <option [value]="m">{{ m }}</option> }
+			</select>
+		</div>
+		<div class="row">
+			<label>URL</label>
+			<input [(ngModel)]="request.url" name="url" required placeholder="https://api.example.com" />
+		</div>
+
+		<div class="headers">
+			@for (h of headerEntries; let i = $index; track h) {
+			<div class="row header-row">
+				<input [(ngModel)]="h.key" name="hk{{i}}" placeholder="Header name" />
+				<input [(ngModel)]="h.value" name="hv{{i}}" placeholder="Header value" />
+				<button type="button" class="link" (click)="removeHeader(i)">Remove</button>
+			</div>
+			}
+			<button type="button" class="link" (click)="addHeader()">+ Add header</button>
+		</div>
+
+		<div class="row">
+			<label>Body</label>
+			<textarea [(ngModel)]="bodyText" name="body" rows="8" placeholder="Raw text or JSON"></textarea>
+		</div>
+
+		<div class="actions">
+			<button [disabled]="loading || !request.url" type="submit">{{ loading ? 'Sending…' : 'Send' }}</button>
+		</div>
+	</form>
+
+	@if (response) { <app-api-response [response]="response"></app-api-response> }
+	@if (errorText) { <p class="error">{{ errorText }}</p> }
+</section>

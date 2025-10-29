@@ -1,0 +1,104 @@
+.min-screen {
+	min-height: 100vh;
+	background: var(--bg);
+}
+
+/* Hero */
+.hero {
+	padding: 5rem 1rem 3rem;
+	text-align: center;
+}
+
+.welcome-message {
+	margin-bottom: 1.5rem;
+	animation: fadeInDown 0.6s ease-out;
+}
+
+.welcome-text {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	font-weight: 700;
+	margin: 0;
+	color: var(--text);
+}
+
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.hero .badge {
+	margin-bottom: 1rem;
+}
+
+.hero-title {
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 800;
+	margin: 0 0 0.8rem;
+}
+
+.hero-lead {
+	font-size: 1.1rem;
+	max-width: 52ch;
+	margin: 0 auto 1.5rem;
+}
+
+.hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	justify-content: center;
+	margin-bottom: 2.5rem;
+}
+
+.btn.pad {
+	padding: 0.7rem 1.1rem;
+}
+
+.stats {
+	max-width: 680px;
+	margin: 0 auto;
+}
+
+.stat {
+	text-align: center;
+}
+
+.stat .value {
+	font-size: 1.7rem;
+	font-weight: 700;
+	color: var(--primary);
+	margin-bottom: 0.25rem;
+}
+
+/* Features */
+.features {
+	padding: 3rem 1rem;
+}
+
+.features-header {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.features-title {
+	font-size: 2rem;
+	font-weight: 700;
+	margin: 0 0 0.5rem;
+}
+
+.features-sub {
+	font-size: 1.1rem;
+	max-width: 60ch;
+	margin: 0 auto;
+}
+
+.feature-strong {
+	font-weight: 600;
+	margin-bottom: 0.25rem;
+}

@@ -1,0 +1,202 @@
+
+<div class="container">
+	<div class="header">
+		<h1 class="title">API Analytics</h1>
+		<p class="muted subtitle">Detailed performance metrics for individual API endpoints</p>
+	</div>
+
+	<!-- Summary cards -->
+		<div class="grid grid-4 stats">
+		<div class="card card-padding">
+			<div class="muted small">Total Endpoints</div>
+				<div class="mono fs-12-700">{{ rows.length }}</div>
+				<div class="muted small">Active endpoints (in range)</div>
+		</div>
+		<div class="card card-padding">
+			<div class="muted small">Avg Success Rate</div>
+				<div class="mono fs-12-700">{{ summary.avgSuccessRate | number:'1.0-1' }}%</div>
+				<div class="muted small">Across shown endpoints</div>
+		</div>
+		<div class="card card-padding">
+			<div class="muted small">Avg Response Time</div>
+				<div class="mono fs-12-700">{{ summary.avgResponseTime | number:'1.0-0' }}ms</div>
+				<div class="muted small">P95: {{ summary.p95ResponseTime | number:'1.0-0' }}ms</div>
+		</div>
+		<div class="card card-padding">
+			<div class="muted small">Error Rate</div>
+				<div class="mono fs-12-700">{{ summary.errorRatePercent | number:'1.0-1' }}%</div>
+				<div class="muted small">Total errors: {{ summary.totalErrors | number }}</div>
+		</div>
+	</div>
+
+	<!-- Filters -->
+	<div class="card mb-1">
+		<div class="card-padding">
+			<h3 class="small-strong h3-compact mb-075">Filters</h3>
+			<div class="grid grid-4 filters">
+				<div class="relative">
+					<input class="input pl10" [(ngModel)]="q" (input)="recompute()" placeholder="Search endpoints..." />
+					<span class="icon left left-075">
+						<img src="/search.svg" alt="" width="16" height="16" />
+					</span>
+				</div>
+							<select class="input" [(ngModel)]="method" (change)="recompute()">
+								<option value="all">All Methods</option>
+								<option value="GET">GET</option>
+								<option value="POST">POST</option>
+								<option value="PUT">PUT</option>
+								<option value="DELETE">DELETE</option>
+				</select>
+							<select class="input" [(ngModel)]="perf" (change)="recompute()">
+								<option value="all">All Performance</option>
+								<option value="fast">Fast (&lt;200ms)</option>
+								<option value="medium">Medium (200-500ms)</option>
+								<option value="slow">Slow (&gt;500ms)</option>
+				</select>
+							<select class="input" [(ngModel)]="range" (change)="recompute()">
+								<option value="1d">Last 24 hours</option>
+								<option value="7d">Last 7 days</option>
+								<option value="30d">Last 30 days</option>
+								<option value="all">All time</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<!-- Table -->
+	<div class="card">
+		<div class="card-padding pad-0">
+			<div class="table">
+				<div class="thead">
+					<div class="tr">
+						<div class="th">Endpoint</div>
+						<div class="th">Method</div>
+						<div class="th">Requests</div>
+						<div class="th">Success Rate</div>
+						<div class="th">Avg Time</div>
+						<div class="th">P95 Time</div>
+						<div class="th">Errors</div>
+						<div class="th">Last Called</div>
+					</div>
+				</div>
+				<div class="tbody">
+					@if (rows.length) {
+						@for (ep of rows; track ep) {
+						<div class="tr clickable" 
+						     (click)="selectEndpoint(ep)"
+						     [class.selected]="selectedEndpoint?.endpoint === ep.endpoint && selectedEndpoint?.method === ep.method">
+							<div class="td mono small ellipsis">{{ ep.endpoint }}</div>
+							<div class="td">
+								<span class="badge mono small badge-bg" [style.color]="methodColor(ep.method)" [style.borderColor]="methodColor(ep.method)">{{ ep.method }}</span>
+							</div>
+							<div class="td mono">{{ ep.totalRequests | number }}</div>
+							<div class="td">
+								<div class="flex-row">
+									<span class="dot" [style.background]="successRateColor(ep.successRate)"></span>
+									<span class="mono">{{ ep.successRate }}%</span>
+								</div>
+							</div>
+							<div class="td mono">{{ formatTime(ep.avgResponseTime) }}</div>
+							<div class="td mono muted">{{ formatTime(ep.p95ResponseTime) }}</div>
+							<div class="td">
+								@if (ep.errorCount > 0) {
+									<span class="badge small badge-error">{{ ep.errorCount }}</span>
+								} @else {
+									<span class="muted">0</span>
+								}
+							</div>
+							<div class="td small muted">{{ ep.lastCalled }}</div>
+						</div>
+						}
+					} @else {
+						<div class="tr">
+							<div class="td muted grid-span-all">No data in this range.</div>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Endpoint Details Card -->
+	<div class="card mb-1">
+		<div class="card-padding">
+			<h3 class="small-strong h3-compact">Endpoint Performance Trends</h3>
+			
+			@if (selectedEndpoint) {
+				<div class="endpoint-details">
+					<!-- Header -->
+					<div class="detail-header">
+						<div class="detail-title">
+							<span class="badge mono" [style.color]="methodColor(selectedEndpoint.method)" [style.borderColor]="methodColor(selectedEndpoint.method)">
+								{{ selectedEndpoint.method }}
+							</span>
+							<span class="mono">{{ selectedEndpoint.endpoint }}</span>
+						</div>
+						<button class="btn ghost small" (click)="selectedEndpoint = null">Close</button>
+					</div>
+
+					<!-- Metrics Grid -->
+					<div class="grid grid-3 mt-1 mb-1">
+						<div class="metric-card">
+							<div class="metric-label">Total Requests</div>
+							<div class="metric-value">{{ selectedEndpoint.requests.length }}</div>
+						</div>
+						<div class="metric-card">
+							<div class="metric-label">Avg Response Time</div>
+							<div class="metric-value">
+								{{ formatTime(getAvgResponseTime()) }}
+							</div>
+						</div>
+						<div class="metric-card">
+							<div class="metric-label">Success Rate</div>
+							<div class="metric-value">
+								{{ getSuccessRate() | number:'1.0-1' }}%
+							</div>
+						</div>
+					</div>
+
+					<!-- Status Distribution -->
+					<div class="detail-section">
+						<h4 class="detail-section-title">Status Code Distribution</h4>
+						<div class="status-distribution">
+							@for (stat of selectedEndpoint.statusDistribution; track stat.status) {
+								<div class="status-bar">
+									<div class="status-info">
+										<span class="badge small" [class]="getStatusClass(stat.status)">{{ stat.status }}</span>
+										<span class="muted small">{{ stat.count }} requests ({{ stat.percentage }}%)</span>
+									</div>
+									<div class="progress-bar">
+										<div class="progress-fill" [style.width.%]="stat.percentage" [class]="getStatusClass(stat.status)"></div>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+
+					<!-- Recent Response Times -->
+					<div class="detail-section">
+						<h4 class="detail-section-title">Recent Response Times (Last 20 Requests)</h4>
+						<div class="time-series">
+							@for (point of selectedEndpoint.timeSeriesData; track point.timestamp) {
+								<div class="time-point">
+									<div class="time-label">{{ point.timestamp }}</div>
+									<div class="time-bar-container">
+										<div class="time-bar" [style.width.%]="(point.responseTime / getMaxResponseTime()) * 100">
+											<span class="time-value">{{ formatTime(point.responseTime) }}</span>
+										</div>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			} @else {
+				<p class="muted mb-075">Select an endpoint above to view detailed performance analysis</p>
+				<div class="chart-placeholder">
+					<p class="muted">Click on an endpoint to view detailed metrics</p>
+				</div>
+			}
+		</div>
+	</div>
+</div>
