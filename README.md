@@ -1,8 +1,8 @@
-# 🔍 Request Explorer
+# Request Explorer
 
 **Request Explorer** is a high-performance, full-stack platform designed for developers to build, test, and manage API requests with precision. By combining a responsive **Angular** frontend with a modular **Node.js** backend, it provides a seamless interface for debugging network traffic, organizing request collections, and analyzing API performance.
 
-## 🚀 Project Overview
+## Project Overview
 
 Request Explorer goes beyond simple request sending. It is an integrated environment that offers:
 * **Stateless Security:** Robust user authentication and session management via JWT.
@@ -10,7 +10,7 @@ Request Explorer goes beyond simple request sending. It is an integrated environ
 * **Comprehensive History:** Automated logging of every request with performance metrics (latency, status codes).
 * **Deep Analytics:** Visualized insights into API usage patterns and response times.
 
-## 🏗️ System Architecture
+## System Architecture
 
 The project is architected as a decoupled client-server system:
 
@@ -20,7 +20,7 @@ The project is architected as a decoupled client-server system:
 
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technologies |
 | :--- | :--- |
@@ -32,7 +32,7 @@ The project is architected as a decoupled client-server system:
 
 ---
 
-## 🚦 Getting Started
+## Getting Started
 
 ### Prerequisites
 -   **Node.js** (v14 or higher)
